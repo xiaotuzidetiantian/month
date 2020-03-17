@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxufang.month.dao.DriverDao">
+	<!-- 查看列表 -->
+	<select id="select" resultType="Driver">
+		select * from driver d left join types t on d.tid=t.tid
+		<where>
+			<if test="d1!=null">
+				and cdate >=#{d1}
+			</if>
+			<if test="d2!=null">
+				and cdate &lt;#{d2}
+			</if>
+			<if test="title!=null">
+				and title like "%"#{title}"%"
+			</if>
+		</where>
+	</select>
+	
+	<!-- 类型查询 -->
+	<select id="getTypesList" resultType="Types">
+		select * from types
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert">
+		insert into driver(movie,title,cdate,tid)
+		values(#{movie},#{title},#{cdate},#{tid})
+	</insert>
+</mapper>
